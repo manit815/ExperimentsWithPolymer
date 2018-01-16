@@ -1,0 +1,28 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="sample-fifth-view">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+
+                padding: 10px;
+            }
+        </style>
+
+        <div class="card">
+            <div class="circle">1</div>
+            <h1>Registration Form</h1>
+
+        </div>
+    </template>
+
+    <script>
+        class SampleFifthView extends Polymer.Element {
+            static get is() { return 'sample-fifth-view'; }
+        }
+
+        window.customElements.define(SampleFifthView.is, SampleFifthView);
+    </script>
+</dom-module>

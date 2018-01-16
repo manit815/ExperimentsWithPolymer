@@ -1,0 +1,83 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!--<script src="../bower_components/webcomponentsjs/webcomponents-lite.js">-->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-selection-column.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+
+<dom-module id="home-quotes">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+
+
+    <div class="card">
+      <h1>Quotes</h1>
+      <!--<blockquote>[[quote]]</blockquote>-->
+      <!--[[users]]-->
+      <!--<paper-button raised on-tap="getQuote" class="primary">Get a New Quote</paper-button>-->
+      <dom-bind>
+        <template>
+          <iron-ajax id="getQuoteAjax" auto url="https://jsonplaceholder.typicode.com/posts" handle-as="json" last-response="{{users}}"></iron-ajax>
+
+          <vaadin-grid items="[[users]]" column-reordering-allowed multi-sort>
+
+            <vaadin-grid-selection-column auto-select frozen> </vaadin-grid-selection-column>
+
+            <vaadin-grid-column width="9em" resizable>
+              <template class="header">
+                <vaadin-grid-sorter path="firstName">First Name</vaadin-grid-sorter>
+              </template>
+              <template>[[item.userId]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="9em" resizable>
+              <template class="header">
+                <vaadin-grid-sorter path="lastName">Last Name</vaadin-grid-sorter>
+              </template>
+              <template>[[item.title]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="15em" flex-grow="2" resizable>
+              <template class="header">
+                <vaadin-grid-sorter path="address.street">Address</vaadin-grid-sorter>
+              </template>
+              <template>[[item.body]]</template>
+            </vaadin-grid-column>
+
+          </vaadin-grid>
+        </template>
+      </dom-bind>
+    </div>
+  </template>
+
+  <script>
+    class SampleFirstView extends Polymer.Element {
+      static get is() { return 'home-quotes'; }
+
+      getQuote() {
+        // get a quote from the API
+        this.$.getQuoteAjax.generateRequest();
+      }
+    }
+
+    window.customElements.define(SampleFirstView.is, SampleFirstView);
+  </script>
+</dom-module>
